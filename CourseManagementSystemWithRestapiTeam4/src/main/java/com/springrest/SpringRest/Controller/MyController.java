@@ -110,12 +110,12 @@ public NewUser updateuser(@RequestBody NewUser user){
 //		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 //	}
 //}
-
-@DeleteMapping("/user{uid}")
-public NewUser deleteUser(@PathVariable("uid") Long uid) {
-	 userRepo.deleteById(uid);
-	 return null;
+@DeleteMapping("/user/{uid}")
+public String deleteUsers(@PathVariable("uid") long uid) {
+	userRepo.deleteById(uid);
+	return "User deleted";
+}
 	
 	 
-}
+
 }
