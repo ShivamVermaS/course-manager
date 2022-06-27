@@ -96,20 +96,7 @@ public NewUser updateuser(@RequestBody NewUser user){
 //		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 //	}
 //}
-// 
-//@DeleteMapping("/courses/{userId}")
-//public ResponseEntity<HttpStatus> deleteUser(@PathVariable String uid) {
-//
-//	try {
-//		this.userRepo.deleteUser(Long.parseLong(uid));
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
-//
-//	catch (Exception e) {
-//
-//		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//	}
-//}
+
 @DeleteMapping("/user/{uid}")
 public String deleteUsers(@PathVariable("uid") long uid) {
 	userRepo.deleteById(uid);
