@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springrest.SpringRest.Repository.CourseRepo;
+import com.springrest.SpringRest.Repository.UserRepo;
+import com.springrest.SpringRest.entities.Admin;
+import com.springrest.SpringRest.entities.Apply;
 import com.springrest.SpringRest.entities.Courses;
 import com.springrest.SpringRest.entities.NewUser;
-import com.springrest.SpringRest.services.CourseRepo;
 import com.springrest.SpringRest.services.CourseService;
-import com.springrest.SpringRest.services.UserRepo;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -30,6 +32,7 @@ public class MyController {
 	CourseRepo courserepo;
 	@Autowired
 	UserRepo userRepo;
+	
 
 	@GetMapping("/courses")
 	public List<Courses> getCourses() {
@@ -64,45 +67,56 @@ public class MyController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-//=======================user====================
-	
-	
+
+//=======================NewUser====================
+
 	@PostMapping("/saveuser")
 	public NewUser saveusers(@RequestBody NewUser user) {
 		return userRepo.save(user);
 	}
 
-@GetMapping("/users")
-public List<NewUser> getusers() {
-return userRepo.findAll();	}
-
-
-@PutMapping("/updateuser")
-public NewUser updateuser(@RequestBody NewUser user){
-	return userRepo.save(user);
+	@GetMapping("/users")
+	public List<NewUser> getusers() {
+		return userRepo.findAll();
 	}
 
-//@DeleteMapping("/user/{userId}")
-//public ResponseEntity<NewUser> deleteUser(@PathVariable String uid) {
-//
-//	try {
-//		this.cService.deleteUser(Long.parseLong(uid));
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
-//
-//	catch (Exception e) {
-//
-//		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//	}
-//}
+	@PutMapping("/updateuser")
+	public NewUser updateuser(@RequestBody NewUser user) {
+		return userRepo.save(user);
+	}
 
-@DeleteMapping("/user/{uid}")
-public String deleteUsers(@PathVariable("uid") long uid) {
-	userRepo.deleteById(uid);
-	return "User deleted";
-}
+	@DeleteMapping("/user/{uid}")
+	public String deleteUsers(@PathVariable("uid") long uid) {
+		userRepo.deleteById(uid);
+		return "User deleted";
+	}
+
+//======api for Admin======
+
+	@PostMapping("/saveadmin")
+	public Admin saveAdmins(@RequestBody Admin admin) {
+		return cService.saveAllAdmins(admin);
+	}
 	
+	 @GetMapping("/admin")
+	   public List<Admin> getAllAdmin()
+	   {
+	       return cService.getAllAdmins();
+	   }
 	 
-
+	//===================api of apply for new course=======
+	   
+	   
+	   @PostMapping("/saveapply")
+	    public String saveApplies(@RequestBody Apply apply)
+	    {
+		   cService.saveApplies(apply);
+	         return "Admin Add Successfully";
+	    }
+	    
+	   @GetMapping("/apply")
+	   public List<Apply> getAllApplies()
+	   {
+	       return cService.getAllApplies();
+	   }
 }

@@ -1,4 +1,4 @@
-package com.springrest.SpringRest.services;
+package com.springrest.SpringRest.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
