@@ -63,7 +63,7 @@ public class MyController {
 		}
 
 		catch (Exception e) {
-
+		//	throw new RuntimeException(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
