@@ -1,9 +1,13 @@
 package com.springrest.SpringRest.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class NewUser {
@@ -11,11 +15,21 @@ public class NewUser {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 long uid;
+
+@NotEmpty
+@Size(min=1, max=20, message="Name Should not be empty")
 String FirstName;
+@NotEmpty
 String LastName;
+
+@javax.validation.constraints.Email(message="Invalid Email")
+@Column(length=30, unique = true)
 String Email;
+
+@NotNull
 String Password;
 String Gender;
+@NotEmpty
 String Mobile_No;
 
 public NewUser() {

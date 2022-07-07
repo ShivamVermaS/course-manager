@@ -3,6 +3,9 @@ package com.springrest.SpringRest.Controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,16 +39,24 @@ public class MyController {
 
 	@GetMapping("/courses")
 	public List<Courses> getCourses() {
-		return this.cService.getCourses();
+		final List<Courses> courses = cService.getCourses();
+		try {
+			if(!courses.isEmpty()) {
+				return courses;
+			}
+		}catch (Exception e) {
+		System.out.println("No Data Available");	
+		}
+		return null;
 	}
 
 	@GetMapping("/courses/{courseId}")
-	public Optional<Courses> getCourse(@PathVariable("courseId") Long courseId) {
+	public Optional<Courses> getCourse(@PathVariable ("courseId") final Long courseId) {
 		return courserepo.findById(courseId);
 	}
 
 	@PostMapping("/courses")
-	public Courses addCourse(@RequestBody Courses course) {
+	public Courses addCourse(@RequestBody final Courses course) {
 		return ((CourseService) this.cService).addCourse(course);
 	}
 
@@ -71,7 +82,7 @@ public class MyController {
 //=======================NewUser====================
 
 	@PostMapping("/saveuser")
-	public NewUser saveusers(@RequestBody NewUser user) {
+	public NewUser saveusers(@Valid @RequestBody NewUser user) {
 		return userRepo.save(user);
 	}
 
