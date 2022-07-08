@@ -42,6 +42,7 @@ public class MyController {
 		final List<Courses> courses = cService.getCourses();
 		try {
 			if(!courses.isEmpty()) {
+				  
 				return courses;
 			}
 		}catch (Exception e) {
@@ -52,12 +53,30 @@ public class MyController {
 
 	@GetMapping("/courses/{courseId}")
 	public Optional<Courses> getCourse(@PathVariable ("courseId") final Long courseId) {
-		return courserepo.findById(courseId);
+		Optional<Courses> course= courserepo.findById(courseId);
+		try {
+			if(course != (null)) {
+				return course;
+			}
+			
+		}catch(Exception e) {
+			System.out.println("no Courses Are Available With This Id" +courseId);
+		}
+		return null;
 	}
 
 	@PostMapping("/courses")
 	public Courses addCourse(@RequestBody final Courses course) {
-		return ((CourseService) this.cService).addCourse(course);
+	 ((CourseService) this.cService).addCourse(course);
+		try {
+			if (course !=(null)) {
+				return course;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("no Courses Are Available With This Id" +course);
+		}
+		return null;
 	}
 
 	@PutMapping("/courses")
@@ -83,17 +102,40 @@ public class MyController {
 
 	@PostMapping("/saveuser")
 	public NewUser saveusers(@Valid @RequestBody NewUser user) {
-		return userRepo.save(user);
+		 userRepo.save(user);
+		 
+		 try {
+				if (user !=(null)) {
+					return user;
+				}
+				
+			} catch (Exception e) {
+				System.out.println("no User Are Available With This Id" +user);
+			}
+			return user ;
+		 
 	}
 
 	@GetMapping("/users")
 	public List<NewUser> getusers() {
-		return userRepo.findAll();
+	final List<NewUser> newuser = userRepo.findAll();
+		try {
+			if (!newuser.isEmpty()) {
+				return newuser;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("No Data Available");
+		}
+		
+		return null;
 	}
 
 	@PutMapping("/updateuser")
 	public NewUser updateuser(@RequestBody NewUser user) {
-		return userRepo.save(user);
+		 
+			return userRepo.save(user);
+		 
 	}
 
 	@DeleteMapping("/user/{uid}")

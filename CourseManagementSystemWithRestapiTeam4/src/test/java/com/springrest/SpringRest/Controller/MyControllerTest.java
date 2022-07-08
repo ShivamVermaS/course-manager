@@ -77,37 +77,6 @@ class MyControllerTest {
     }
 
     /**
-     * Method under test: {@link MyController#deleteUsers(long)}
-     */
-    @Test
-    void testDeleteUsers5() throws Exception {
-        doNothing().when(userRepo).deleteById((Long) any());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/user/{uid}", 1L);
-        MockMvcBuilders.standaloneSetup(myController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-                .andExpect(MockMvcResultMatchers.content().string("User deleted"));
-    }
-
-    /**
-     * Method under test: {@link MyController#deleteUsers(long)}
-     */
-    @Test
-    void testDeleteUsers6() throws Exception {
-        doNothing().when(userRepo).deleteById((Long) any());
-        MockHttpServletRequestBuilder deleteResult = MockMvcRequestBuilders.delete("/user/{uid}", 1L);
-        deleteResult.characterEncoding("Encoding");
-        MockMvcBuilders.standaloneSetup(myController)
-                .build()
-                .perform(deleteResult)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-                .andExpect(MockMvcResultMatchers.content().string("User deleted"));
-    }
-
-    /**
      * Method under test: {@link MyController#getAllAdmin()}
      */
     @Test
@@ -127,37 +96,6 @@ class MyControllerTest {
      */
     @Test
     void testGetAllAdmin4() throws Exception {
-        when(courseService.getAllAdmins()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/admin");
-        getResult.characterEncoding("Encoding");
-        MockMvcBuilders.standaloneSetup(myController)
-                .build()
-                .perform(getResult)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
-    }
-
-    /**
-     * Method under test: {@link MyController#getAllAdmin()}
-     */
-    @Test
-    void testGetAllAdmin5() throws Exception {
-        when(courseService.getAllAdmins()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/admin");
-        MockMvcBuilders.standaloneSetup(myController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
-    }
-
-    /**
-     * Method under test: {@link MyController#getAllAdmin()}
-     */
-    @Test
-    void testGetAllAdmin6() throws Exception {
         when(courseService.getAllAdmins()).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/admin");
         getResult.characterEncoding("Encoding");
@@ -197,33 +135,6 @@ class MyControllerTest {
     }
 
     /**
-     * Method under test: {@link MyController#getCourse(Long)}
-     */
-    @Test
-    void testGetCourse3() throws Exception {
-        Courses courses = new Courses();
-        courses.setCategory("Category");
-        courses.setDiscription("Discription");
-        courses.setDuration("Duration");
-        courses.setFee(1L);
-        courses.setId(123L);
-        courses.setImage("Image");
-        courses.setTitle("Dr");
-        Optional<Courses> ofResult = Optional.of(courses);
-        when(courseRepo.findById((Long) any())).thenReturn(ofResult);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/courses/{courseId}", 123L);
-        MockMvcBuilders.standaloneSetup(myController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content()
-                        .string(
-                                "{\"id\":123,\"title\":\"Dr\",\"duration\":\"Duration\",\"fee\":1,\"image\":\"Image\",\"discription\":\"Discription\","
-                                        + "\"category\":\"Category\"}"));
-    }
-
-    /**
      * Method under test: {@link MyController#getCourses()}
      */
     @Test
@@ -233,9 +144,7 @@ class MyControllerTest {
         MockMvcBuilders.standaloneSetup(myController)
                 .build()
                 .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     /**
@@ -243,15 +152,27 @@ class MyControllerTest {
      */
     @Test
     void testGetCourses2() throws Exception {
-        when(courseService.getCourses()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/courses");
-        getResult.characterEncoding("Encoding");
+        Courses courses = new Courses();
+        courses.setCategory("?");
+        courses.setDiscription("?");
+        courses.setDuration("?");
+        courses.setFee(1L);
+        courses.setId(123L);
+        courses.setImage("?");
+        courses.setTitle("Dr");
+
+        ArrayList<Courses> coursesList = new ArrayList<>();
+        coursesList.add(courses);
+        when(courseService.getCourses()).thenReturn(coursesList);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/courses");
         MockMvcBuilders.standaloneSetup(myController)
                 .build()
-                .perform(getResult)
+                .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(
+                                "[{\"id\":123,\"title\":\"Dr\",\"duration\":\"?\",\"fee\":1,\"image\":\"?\",\"discription\":\"?\",\"category\":\"?\"}]"));
     }
 
     /**
@@ -264,9 +185,7 @@ class MyControllerTest {
         MockMvcBuilders.standaloneSetup(myController)
                 .build()
                 .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     /**
@@ -274,46 +193,27 @@ class MyControllerTest {
      */
     @Test
     void testGetCourses4() throws Exception {
-        when(courseService.getCourses()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/courses");
-        getResult.characterEncoding("Encoding");
-        MockMvcBuilders.standaloneSetup(myController)
-                .build()
-                .perform(getResult)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
-    }
+        Courses courses = new Courses();
+        courses.setCategory("?");
+        courses.setDiscription("?");
+        courses.setDuration("?");
+        courses.setFee(1L);
+        courses.setId(123L);
+        courses.setImage("?");
+        courses.setTitle("Dr");
 
-    /**
-     * Method under test: {@link MyController#getCourses()}
-     */
-    @Test
-    void testGetCourses5() throws Exception {
-        when(courseService.getCourses()).thenReturn(new ArrayList<>());
+        ArrayList<Courses> coursesList = new ArrayList<>();
+        coursesList.add(courses);
+        when(courseService.getCourses()).thenReturn(coursesList);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/courses");
         MockMvcBuilders.standaloneSetup(myController)
                 .build()
                 .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
-    }
-
-    /**
-     * Method under test: {@link MyController#getCourses()}
-     */
-    @Test
-    void testGetCourses6() throws Exception {
-        when(courseService.getCourses()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/courses");
-        getResult.characterEncoding("Encoding");
-        MockMvcBuilders.standaloneSetup(myController)
-                .build()
-                .perform(getResult)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(
+                                "[{\"id\":123,\"title\":\"Dr\",\"duration\":\"?\",\"fee\":1,\"image\":\"?\",\"discription\":\"?\",\"category\":\"?\"}]"));
     }
 
     /**
@@ -393,44 +293,6 @@ class MyControllerTest {
     }
 
     /**
-     * Method under test: {@link MyController#addCourse(Courses)}
-     */
-    @Test
-    void testAddCourse3() throws Exception {
-        Courses courses = new Courses();
-        courses.setCategory("Category");
-        courses.setDiscription("Discription");
-        courses.setDuration("Duration");
-        courses.setFee(1L);
-        courses.setId(123L);
-        courses.setImage("Image");
-        courses.setTitle("Dr");
-        when(courseService.addCourse((Courses) any())).thenReturn(courses);
-
-        Courses courses1 = new Courses();
-        courses1.setCategory("Category");
-        courses1.setDiscription("Discription");
-        courses1.setDuration("Duration");
-        courses1.setFee(1L);
-        courses1.setId(123L);
-        courses1.setImage("Image");
-        courses1.setTitle("Dr");
-        String content = (new ObjectMapper()).writeValueAsString(courses1);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/courses")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-        MockMvcBuilders.standaloneSetup(myController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content()
-                        .string(
-                                "{\"id\":123,\"title\":\"Dr\",\"duration\":\"Duration\",\"fee\":1,\"image\":\"Image\",\"discription\":\"Discription\","
-                                        + "\"category\":\"Category\"}"));
-    }
-
-    /**
      * Method under test: {@link MyController#getusers()}
      */
     @Test
@@ -440,9 +302,7 @@ class MyControllerTest {
         MockMvcBuilders.standaloneSetup(myController)
                 .build()
                 .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     /**
@@ -450,46 +310,28 @@ class MyControllerTest {
      */
     @Test
     void testGetusers4() throws Exception {
-        when(userRepo.findAll()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/users");
-        getResult.characterEncoding("Encoding");
-        MockMvcBuilders.standaloneSetup(myController)
-                .build()
-                .perform(getResult)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
-    }
+        NewUser newUser = new NewUser();
+        newUser.setEmail("jane.doe@example.org");
+        newUser.setFirst_name("Jane");
+        newUser.setGender("?");
+        newUser.setLast_name("Doe");
+        newUser.setMobile_No("?");
+        newUser.setPassword("iloveyou");
+        newUser.setUid(1L);
 
-    /**
-     * Method under test: {@link MyController#getusers()}
-     */
-    @Test
-    void testGetusers5() throws Exception {
-        when(userRepo.findAll()).thenReturn(new ArrayList<>());
+        ArrayList<NewUser> newUserList = new ArrayList<>();
+        newUserList.add(newUser);
+        when(userRepo.findAll()).thenReturn(newUserList);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users");
         MockMvcBuilders.standaloneSetup(myController)
                 .build()
                 .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
-    }
-
-    /**
-     * Method under test: {@link MyController#getusers()}
-     */
-    @Test
-    void testGetusers6() throws Exception {
-        when(userRepo.findAll()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/users");
-        getResult.characterEncoding("Encoding");
-        MockMvcBuilders.standaloneSetup(myController)
-                .build()
-                .perform(getResult)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(
+                                "[{\"uid\":1,\"password\":\"iloveyou\",\"mobile_No\":\"?\",\"last_name\":\"Doe\",\"first_name\":\"Jane\",\"gender\":\"?\","
+                                        + "\"email\":\"jane.doe@example.org\"}]"));
     }
 
     /**
@@ -524,24 +366,30 @@ class MyControllerTest {
     }
 
     /**
-     * Method under test: {@link MyController#saveAdmins(Admin)}
+     * Method under test: {@link MyController#saveusers(NewUser)}
      */
     @Test
-    void testSaveAdmins3() throws Exception {
-        Admin admin = new Admin();
-        admin.setEmail("jane.doe@example.org");
-        admin.setName("Name");
-        admin.setPassword("iloveyou");
-        admin.setUsername("janedoe");
-        when(courseService.saveAllAdmins((Admin) any())).thenReturn(admin);
+    void testSaveusers2() throws Exception {
+        NewUser newUser = new NewUser();
+        newUser.setEmail("jane.doe@example.org");
+        newUser.setFirst_name("Jane");
+        newUser.setGender("Gender");
+        newUser.setLast_name("Doe");
+        newUser.setMobile_No("Mobile No");
+        newUser.setPassword("iloveyou");
+        newUser.setUid(1L);
+        when(userRepo.save((NewUser) any())).thenReturn(newUser);
 
-        Admin admin1 = new Admin();
-        admin1.setEmail("jane.doe@example.org");
-        admin1.setName("Name");
-        admin1.setPassword("iloveyou");
-        admin1.setUsername("janedoe");
-        String content = (new ObjectMapper()).writeValueAsString(admin1);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/saveadmin")
+        NewUser newUser1 = new NewUser();
+        newUser1.setEmail("jane.doe@example.org");
+        newUser1.setFirst_name("Jane");
+        newUser1.setGender("Gender");
+        newUser1.setLast_name("Doe");
+        newUser1.setMobile_No("Mobile No");
+        newUser1.setPassword("iloveyou");
+        newUser1.setUid(1L);
+        String content = (new ObjectMapper()).writeValueAsString(newUser1);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/saveuser")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
         MockMvcBuilders.standaloneSetup(myController)
@@ -551,59 +399,9 @@ class MyControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
-                                "{\"name\":\"Name\",\"username\":\"janedoe\",\"email\":\"jane.doe@example.org\",\"password\":\"iloveyou\"}"));
+                                "{\"uid\":1,\"password\":\"iloveyou\",\"mobile_No\":\"Mobile No\",\"last_name\":\"Doe\",\"first_name\":\"Jane\",\"gender"
+                                        + "\":\"Gender\",\"email\":\"jane.doe@example.org\"}"));
     }
-
-    /**
-     * Method under test: {@link MyController#saveusers(NewUser)}
-     */
-	/*
-	 * @Test void testSaveusers2() throws Exception { NewUser newUser = new
-	 * NewUser(); newUser.setEmail("jane.doe@example.org");
-	 * newUser.setFirstName("Jane"); newUser.setJendra("Gender");
-	 * newUser.setLastName("Doe"); newUser.setMobile_No("Mobile No");
-	 * newUser.setPassword("iloveyou"); newUser.setUid(1L);
-	 * when(userRepo.save((NewUser) any())).thenReturn(newUser);
-	 * 
-	 * NewUser newUser1 = new NewUser(); newUser1.setEmail("jane.doe@example.org");
-	 * newUser1.setFirstName("Jane"); newUser1.setJendra("Gender");
-	 * newUser1.setLastName("Doe"); newUser1.setMobile_No("Mobile No");
-	 * newUser1.setPassword("iloveyou"); newUser1.setUid(1L); String content = (new
-	 * ObjectMapper()).writeValueAsString(newUser1); MockHttpServletRequestBuilder
-	 * requestBuilder = MockMvcRequestBuilders.post("/saveuser")
-	 * .contentType(MediaType.APPLICATION_JSON) .content(content);
-	 * MockMvcBuilders.standaloneSetup(myController) .build()
-	 * .perform(requestBuilder) .andExpect(MockMvcResultMatchers.status().isOk())
-	 * .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-	 * .andExpect(MockMvcResultMatchers.content() .string(
-	 * "{\"uid\":1,\"password\":\"iloveyou\",\"email\":\"jane.doe@example.org\",\"lastName\":\"Doe\",\"mobile_No\":\"Mobile"
-	 * + " No\",\"gender\":\"Gender\",\"firstName\":\"Jane\"}")); }
-	 */
-    /**
-     * Method under test: {@link MyController#saveusers(NewUser)}
-     */
-	/*
-	 * @Test void testSaveusers3() throws Exception { NewUser newUser = new
-	 * NewUser(); newUser.setEmail("jane.doe@example.org");
-	 * newUser.setFirstName("Jane"); newUser.setJendra("Gender");
-	 * newUser.setLastName("Doe"); newUser.setMobile_No("Mobile No");
-	 * newUser.setPassword("iloveyou"); newUser.setUid(1L);
-	 * when(userRepo.save((NewUser) any())).thenReturn(newUser);
-	 * 
-	 * NewUser newUser1 = new NewUser(); newUser1.setEmail("jane.doe@example.org");
-	 * newUser1.setFirstName("Jane"); newUser1.setJendra("Gender");
-	 * newUser1.setLastName("Doe"); newUser1.setMobile_No("Mobile No");
-	 * newUser1.setPassword("iloveyou"); newUser1.setUid(1L); String content = (new
-	 * ObjectMapper()).writeValueAsString(newUser1); MockHttpServletRequestBuilder
-	 * requestBuilder = MockMvcRequestBuilders.post("/saveuser")
-	 * .contentType(MediaType.APPLICATION_JSON) .content(content);
-	 * MockMvcBuilders.standaloneSetup(myController) .build()
-	 * .perform(requestBuilder) .andExpect(MockMvcResultMatchers.status().isOk())
-	 * .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-	 * .andExpect(MockMvcResultMatchers.content() .string(
-	 * "{\"uid\":1,\"password\":\"iloveyou\",\"lastName\":\"Doe\",\"email\":\"jane.doe@example.org\",\"firstName\":\"Jane\","
-	 * + "\"mobile_No\":\"Mobile No\",\"gender\":\"Gender\"}")); }
-	 */
 
     /**
      * Method under test: {@link MyController#updateCourse(Courses)}
@@ -648,44 +446,6 @@ class MyControllerTest {
      */
     @Test
     void testUpdateCourse2() throws Exception {
-        Courses courses = new Courses();
-        courses.setCategory("Category");
-        courses.setDiscription("Discription");
-        courses.setDuration("Duration");
-        courses.setFee(1L);
-        courses.setId(123L);
-        courses.setImage("Image");
-        courses.setTitle("Dr");
-        when(courseService.updateCourse((Courses) any())).thenReturn(courses);
-
-        Courses courses1 = new Courses();
-        courses1.setCategory("Category");
-        courses1.setDiscription("Discription");
-        courses1.setDuration("Duration");
-        courses1.setFee(1L);
-        courses1.setId(123L);
-        courses1.setImage("Image");
-        courses1.setTitle("Dr");
-        String content = (new ObjectMapper()).writeValueAsString(courses1);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/courses")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-        MockMvcBuilders.standaloneSetup(myController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content()
-                        .string(
-                                "{\"id\":123,\"title\":\"Dr\",\"duration\":\"Duration\",\"fee\":1,\"image\":\"Image\",\"discription\":\"Discription\","
-                                        + "\"category\":\"Category\"}"));
-    }
-
-    /**
-     * Method under test: {@link MyController#updateCourse(Courses)}
-     */
-    @Test
-    void testUpdateCourse3() throws Exception {
         Courses courses = new Courses();
         courses.setCategory("Category");
         courses.setDiscription("Discription");
@@ -798,45 +558,6 @@ class MyControllerTest {
     }
 
     /**
-     * Method under test: {@link MyController#deleteCourse(String)}
-     */
-    @Test
-    void testDeleteCourse7() throws Exception {
-        doNothing().when(courseService).deleteCourse(anyLong());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/courses/{courseId}", "42");
-        MockMvcBuilders.standaloneSetup(myController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
-
-    /**
-     * Method under test: {@link MyController#deleteCourse(String)}
-     */
-    @Test
-    void testDeleteCourse8() throws Exception {
-        doNothing().when(courseService).deleteCourse(anyLong());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/courses/{courseId}", "Uri Vars",
-                "Uri Vars");
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(myController).build().perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().is(500));
-    }
-
-    /**
-     * Method under test: {@link MyController#deleteCourse(String)}
-     */
-    @Test
-    void testDeleteCourse9() throws Exception {
-        doNothing().when(courseService).deleteCourse(anyLong());
-        MockHttpServletRequestBuilder deleteResult = MockMvcRequestBuilders.delete("/courses/{courseId}", "42");
-        deleteResult.characterEncoding("Encoding");
-        MockMvcBuilders.standaloneSetup(myController)
-                .build()
-                .perform(deleteResult)
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
-
-    /**
      * Method under test: {@link MyController#saveApplies(Apply)}
      */
     @Test
@@ -844,12 +565,12 @@ class MyControllerTest {
         doNothing().when(courseService).saveApplies((Apply) any());
 
         Apply apply = new Apply();
-        apply.setCourseId("42");
-        apply.setCourseName("Course Name");
+        apply.setCourse_id("Course id");
+        apply.setCourse_name("Course name");
         apply.setDuration("Duration");
         apply.setFees("Fees");
-        apply.setFirstName("Jane");
-        apply.setLastName("Doe");
+        apply.setFirst_name("Jane");
+        apply.setLast_name("Doe");
         String content = (new ObjectMapper()).writeValueAsString(apply);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/saveapply")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -870,38 +591,12 @@ class MyControllerTest {
         doNothing().when(courseService).saveApplies((Apply) any());
 
         Apply apply = new Apply();
-        apply.setCourseId("42");
-        apply.setCourseName("Course Name");
+        apply.setCourse_id("Course id");
+        apply.setCourse_name("Course name");
         apply.setDuration("Duration");
         apply.setFees("Fees");
-        apply.setFirstName("Jane");
-        apply.setLastName("Doe");
-        String content = (new ObjectMapper()).writeValueAsString(apply);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/saveapply")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-        MockMvcBuilders.standaloneSetup(myController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-                .andExpect(MockMvcResultMatchers.content().string("Admin Add Successfully"));
-    }
-
-    /**
-     * Method under test: {@link MyController#saveApplies(Apply)}
-     */
-    @Test
-    void testSaveApplies3() throws Exception {
-        doNothing().when(courseService).saveApplies((Apply) any());
-
-        Apply apply = new Apply();
-        apply.setCourseId("42");
-        apply.setCourseName("Course Name");
-        apply.setDuration("Duration");
-        apply.setFees("Fees");
-        apply.setFirstName("Jane");
-        apply.setLastName("Doe");
+        apply.setFirst_name("Jane");
+        apply.setLast_name("Doe");
         String content = (new ObjectMapper()).writeValueAsString(apply);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/saveapply")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -965,37 +660,6 @@ class MyControllerTest {
      */
     @Test
     void testGetAllApplies4() throws Exception {
-        when(courseService.getAllApplies()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/apply");
-        getResult.characterEncoding("Encoding");
-        MockMvcBuilders.standaloneSetup(myController)
-                .build()
-                .perform(getResult)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
-    }
-
-    /**
-     * Method under test: {@link MyController#getAllApplies()}
-     */
-    @Test
-    void testGetAllApplies5() throws Exception {
-        when(courseService.getAllApplies()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/apply");
-        MockMvcBuilders.standaloneSetup(myController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
-    }
-
-    /**
-     * Method under test: {@link MyController#getAllApplies()}
-     */
-    @Test
-    void testGetAllApplies6() throws Exception {
         when(courseService.getAllApplies()).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/apply");
         getResult.characterEncoding("Encoding");
@@ -1161,103 +825,115 @@ class MyControllerTest {
     /**
      * Method under test: {@link MyController#saveusers(NewUser)}
      */
-	/*
-	 * @Test void testSaveusers() throws Exception { NewUser newUser = new
-	 * NewUser(); newUser.setEmail("jane.doe@example.org");
-	 * newUser.setFirstName("Jane"); newUser.setJendra("Gender");
-	 * newUser.setLastName("Doe"); newUser.setMobile_No("Mobile No");
-	 * newUser.setPassword("iloveyou"); newUser.setUid(1L);
-	 * when(userRepo.save((NewUser) any())).thenReturn(newUser);
-	 * 
-	 * NewUser newUser1 = new NewUser(); newUser1.setEmail("jane.doe@example.org");
-	 * newUser1.setFirstName("Jane"); newUser1.setJendra("Gender");
-	 * newUser1.setLastName("Doe"); newUser1.setMobile_No("Mobile No");
-	 * newUser1.setPassword("iloveyou"); newUser1.setUid(1L); String content = (new
-	 * ObjectMapper()).writeValueAsString(newUser1); MockHttpServletRequestBuilder
-	 * requestBuilder = MockMvcRequestBuilders.post("/saveuser")
-	 * .contentType(MediaType.APPLICATION_JSON) .content(content);
-	 * MockMvcBuilders.standaloneSetup(myController) .build()
-	 * .perform(requestBuilder) .andExpect(MockMvcResultMatchers.status().isOk())
-	 * .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-	 * .andExpect(MockMvcResultMatchers.content() .string(
-	 * "{\"uid\":1,\"password\":\"iloveyou\",\"mobile_No\":\"Mobile No\",\"lastName\":\"Doe\",\"firstName\":\"Jane\",\"email\":"
-	 * + "\"jane.doe@example.org\",\"gender\":\"Gender\"}")); }
-	 */
+    @Test
+    void testSaveusers() throws Exception {
+        NewUser newUser = new NewUser();
+        newUser.setEmail("jane.doe@example.org");
+        newUser.setFirst_name("Jane");
+        newUser.setGender("Gender");
+        newUser.setLast_name("Doe");
+        newUser.setMobile_No("Mobile No");
+        newUser.setPassword("iloveyou");
+        newUser.setUid(1L);
+        when(userRepo.save((NewUser) any())).thenReturn(newUser);
+
+        NewUser newUser1 = new NewUser();
+        newUser1.setEmail("jane.doe@example.org");
+        newUser1.setFirst_name("Jane");
+        newUser1.setGender("Gender");
+        newUser1.setLast_name("Doe");
+        newUser1.setMobile_No("Mobile No");
+        newUser1.setPassword("iloveyou");
+        newUser1.setUid(1L);
+        String content = (new ObjectMapper()).writeValueAsString(newUser1);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/saveuser")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+        MockMvcBuilders.standaloneSetup(myController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(
+                                "{\"uid\":1,\"password\":\"iloveyou\",\"first_name\":\"Jane\",\"last_name\":\"Doe\",\"gender\":\"Gender\",\"mobile_No\":\"Mobile"
+                                        + " No\",\"email\":\"jane.doe@example.org\"}"));
+    }
 
     /**
      * Method under test: {@link MyController#updateuser(NewUser)}
      */
-	/*
-	 * @Test void testUpdateuser() throws Exception { NewUser newUser = new
-	 * NewUser(); newUser.setEmail("jane.doe@example.org");
-	 * newUser.setFirstName("Jane"); newUser.setJendra("Gender");
-	 * newUser.setLastName("Doe"); newUser.setMobile_No("Mobile No");
-	 * newUser.setPassword("iloveyou"); newUser.setUid(1L);
-	 * when(userRepo.save((NewUser) any())).thenReturn(newUser);
-	 * 
-	 * NewUser newUser1 = new NewUser(); newUser1.setEmail("jane.doe@example.org");
-	 * newUser1.setFirstName("Jane"); newUser1.setJendra("Gender");
-	 * newUser1.setLastName("Doe"); newUser1.setMobile_No("Mobile No");
-	 * newUser1.setPassword("iloveyou"); newUser1.setUid(1L); String content = (new
-	 * ObjectMapper()).writeValueAsString(newUser1); MockHttpServletRequestBuilder
-	 * requestBuilder = MockMvcRequestBuilders.put("/updateuser")
-	 * .contentType(MediaType.APPLICATION_JSON) .content(content);
-	 * MockMvcBuilders.standaloneSetup(myController) .build()
-	 * .perform(requestBuilder) .andExpect(MockMvcResultMatchers.status().isOk())
-	 * .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-	 * .andExpect(MockMvcResultMatchers.content() .string(
-	 * "{\"uid\":1,\"password\":\"iloveyou\",\"mobile_No\":\"Mobile No\",\"lastName\":\"Doe\",\"firstName\":\"Jane\",\"email\":"
-	 * + "\"jane.doe@example.org\",\"gender\":\"Gender\"}")); }
-	 */
+    @Test
+    void testUpdateuser() throws Exception {
+        NewUser newUser = new NewUser();
+        newUser.setEmail("jane.doe@example.org");
+        newUser.setFirst_name("Jane");
+        newUser.setGender("Gender");
+        newUser.setLast_name("Doe");
+        newUser.setMobile_No("Mobile No");
+        newUser.setPassword("iloveyou");
+        newUser.setUid(1L);
+        when(userRepo.save((NewUser) any())).thenReturn(newUser);
+
+        NewUser newUser1 = new NewUser();
+        newUser1.setEmail("jane.doe@example.org");
+        newUser1.setFirst_name("Jane");
+        newUser1.setGender("Gender");
+        newUser1.setLast_name("Doe");
+        newUser1.setMobile_No("Mobile No");
+        newUser1.setPassword("iloveyou");
+        newUser1.setUid(1L);
+        String content = (new ObjectMapper()).writeValueAsString(newUser1);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/updateuser")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+        MockMvcBuilders.standaloneSetup(myController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(
+                                "{\"uid\":1,\"password\":\"iloveyou\",\"first_name\":\"Jane\",\"last_name\":\"Doe\",\"gender\":\"Gender\",\"mobile_No\":\"Mobile"
+                                        + " No\",\"email\":\"jane.doe@example.org\"}"));
+    }
+
     /**
      * Method under test: {@link MyController#updateuser(NewUser)}
      */
-	/*
-	 * @Test void testUpdateuser2() throws Exception { NewUser newUser = new
-	 * NewUser(); newUser.setEmail("jane.doe@example.org");
-	 * newUser.setFirstName("Jane"); newUser.setJendra("Gender");
-	 * newUser.setLastName("Doe"); newUser.setMobile_No("Mobile No");
-	 * newUser.setPassword("iloveyou"); newUser.setUid(1L);
-	 * when(userRepo.save((NewUser) any())).thenReturn(newUser);
-	 * 
-	 * NewUser newUser1 = new NewUser(); newUser1.setEmail("jane.doe@example.org");
-	 * newUser1.setFirstName("Jane"); newUser1.setJendra("Gender");
-	 * newUser1.setLastName("Doe"); newUser1.setMobile_No("Mobile No");
-	 * newUser1.setPassword("iloveyou"); newUser1.setUid(1L); String content = (new
-	 * ObjectMapper()).writeValueAsString(newUser1); MockHttpServletRequestBuilder
-	 * requestBuilder = MockMvcRequestBuilders.put("/updateuser")
-	 * .contentType(MediaType.APPLICATION_JSON) .content(content);
-	 * MockMvcBuilders.standaloneSetup(myController) .build()
-	 * .perform(requestBuilder) .andExpect(MockMvcResultMatchers.status().isOk())
-	 * .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-	 * .andExpect(MockMvcResultMatchers.content() .string(
-	 * "{\"uid\":1,\"password\":\"iloveyou\",\"email\":\"jane.doe@example.org\",\"lastName\":\"Doe\",\"mobile_No\":\"Mobile"
-	 * + " No\",\"gender\":\"Gender\",\"firstName\":\"Jane\"}"));}
-	 */
-    /**
-     * Method under test: {@link MyController#updateuser(NewUser)}
-     */
-	/*
-	 * @Test void testUpdateuser3() throws Exception { NewUser newUser = new
-	 * NewUser(); newUser.setEmail("jane.doe@example.org");
-	 * newUser.setFirstName("Jane"); newUser.setJendra("Gender");
-	 * newUser.setLastName("Doe"); newUser.setMobile_No("Mobile No");
-	 * newUser.setPassword("iloveyou"); newUser.setUid(1L);
-	 * when(userRepo.save((NewUser) any())).thenReturn(newUser);
-	 * 
-	 * NewUser newUser1 = new NewUser(); newUser1.setEmail("jane.doe@example.org");
-	 * newUser1.setFirstName("Jane"); newUser1.setJendra("Gender");
-	 * newUser1.setLastName("Doe"); newUser1.setMobile_No("Mobile No");
-	 * newUser1.setPassword("iloveyou"); newUser1.setUid(1L); String content = (new
-	 * ObjectMapper()).writeValueAsString(newUser1); MockHttpServletRequestBuilder
-	 * requestBuilder = MockMvcRequestBuilders.put("/updateuser")
-	 * .contentType(MediaType.APPLICATION_JSON) .content(content);
-	 * MockMvcBuilders.standaloneSetup(myController) .build()
-	 * .perform(requestBuilder) .andExpect(MockMvcResultMatchers.status().isOk())
-	 * .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-	 * .andExpect(MockMvcResultMatchers.content() .string(
-	 * "{\"uid\":1,\"password\":\"iloveyou\",\"lastName\":\"Doe\",\"email\":\"jane.doe@example.org\",\"firstName\":\"Jane\","
-	 * + "\"mobile_No\":\"Mobile No\",\"gender\":\"Gender\"}")); }
-	 */
+    @Test
+    void testUpdateuser2() throws Exception {
+        NewUser newUser = new NewUser();
+        newUser.setEmail("jane.doe@example.org");
+        newUser.setFirst_name("Jane");
+        newUser.setGender("Gender");
+        newUser.setLast_name("Doe");
+        newUser.setMobile_No("Mobile No");
+        newUser.setPassword("iloveyou");
+        newUser.setUid(1L);
+        when(userRepo.save((NewUser) any())).thenReturn(newUser);
+
+        NewUser newUser1 = new NewUser();
+        newUser1.setEmail("jane.doe@example.org");
+        newUser1.setFirst_name("Jane");
+        newUser1.setGender("Gender");
+        newUser1.setLast_name("Doe");
+        newUser1.setMobile_No("Mobile No");
+        newUser1.setPassword("iloveyou");
+        newUser1.setUid(1L);
+        String content = (new ObjectMapper()).writeValueAsString(newUser1);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/updateuser")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+        MockMvcBuilders.standaloneSetup(myController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(
+                                "{\"uid\":1,\"password\":\"iloveyou\",\"mobile_No\":\"Mobile No\",\"last_name\":\"Doe\",\"first_name\":\"Jane\",\"gender"
+                                        + "\":\"Gender\",\"email\":\"jane.doe@example.org\"}"));
+    }
 }
 

@@ -18,10 +18,10 @@ long uid;
 
 @NotEmpty
 @Size(min=1, max=20, message="Name Should not be empty")
-String FirstName;
+String First_name;
 @NotEmpty
-String LastName;
-
+String Last_name;
+@NotEmpty
 @javax.validation.constraints.Email(message="Invalid Email")
 @Column(length=30, unique = true)
 String Email;
@@ -36,113 +36,83 @@ public NewUser() {
 	
 	
 }
-public NewUser(long uid, String firstName, String lastName, String email, String password, String gender,
-		String mobile_No) {
+
+public NewUser(long uid, @NotEmpty @Size(min = 1, max = 20, message = "Name Should not be empty") String first_name,
+		@NotEmpty String last_name,
+		@NotEmpty @javax.validation.constraints.Email(message = "Invalid Email") String email, @NotNull String password,
+		String gender, @NotEmpty String mobile_No) {
 	super();
 	this.uid = uid;
-	FirstName = firstName;
-	LastName = lastName;
+	First_name = first_name;
+	Last_name = last_name;
 	Email = email;
 	Password = password;
 	Gender = gender;
 	Mobile_No = mobile_No;
 }
-
 
 public long getUid() {
 	return uid;
 }
 
-
-
 public void setUid(long uid) {
 	this.uid = uid;
 }
 
-
-
-public String getFirstName() {
-	return FirstName;
+public String getFirst_name() {
+	return First_name;
 }
 
-
-
-public void setFirstName(String firstName) {
-	FirstName = firstName;
+public void setFirst_name(String first_name) {
+	First_name = first_name;
 }
 
-
-
-public String getLastName() {
-	return LastName;
+public String getLast_name() {
+	return Last_name;
 }
 
-
-
-public void setLastName(String lastName) {
-	LastName = lastName;
+public void setLast_name(String last_name) {
+	Last_name = last_name;
 }
-
-
 
 public String getEmail() {
 	return Email;
 }
 
-
-
 public void setEmail(String email) {
 	Email = email;
 }
-
-
 
 public String getPassword() {
 	return Password;
 }
 
-
-
 public void setPassword(String password) {
 	Password = password;
 }
-
-
 
 public String getGender() {
 	return Gender;
 }
 
-
-
-public void setJendra(String gender) {
+public void setGender(String gender) {
 	Gender = gender;
 }
-
-
 
 public String getMobile_No() {
 	return Mobile_No;
 }
 
-
-
 public void setMobile_No(String mobile_No) {
 	Mobile_No = mobile_No;
 }
 
-
-
-
-
-
-
-
 @Override
 public String toString() {
-	return "NewUser [Uid=" + uid + ", FirstName=" + FirstName + ", LastName=" + LastName + ", Email=" + Email
+	return "NewUser [uid=" + uid + ", First_name=" + First_name + ", Last_name=" + Last_name + ", Email=" + Email
 			+ ", Password=" + Password + ", Gender=" + Gender + ", Mobile_No=" + Mobile_No + "]";
 }
+
 
 
 }

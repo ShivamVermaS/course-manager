@@ -11,17 +11,17 @@ class NewUserTest {
      * <ul>
      *   <li>{@link NewUser#NewUser()}
      *   <li>{@link NewUser#setEmail(String)}
-     *   <li>{@link NewUser#setFirstName(String)}
-     *   <li>{@link NewUser#setJendra(String)}
-     *   <li>{@link NewUser#setLastName(String)}
+     *   <li>{@link NewUser#setFirst_name(String)}
+     *   <li>{@link NewUser#setGender(String)}
+     *   <li>{@link NewUser#setLast_name(String)}
      *   <li>{@link NewUser#setMobile_No(String)}
      *   <li>{@link NewUser#setPassword(String)}
      *   <li>{@link NewUser#setUid(long)}
      *   <li>{@link NewUser#toString()}
      *   <li>{@link NewUser#getEmail()}
-     *   <li>{@link NewUser#getFirstName()}
+     *   <li>{@link NewUser#getFirst_name()}
      *   <li>{@link NewUser#getGender()}
-     *   <li>{@link NewUser#getLastName()}
+     *   <li>{@link NewUser#getLast_name()}
      *   <li>{@link NewUser#getMobile_No()}
      *   <li>{@link NewUser#getPassword()}
      *   <li>{@link NewUser#getUid()}
@@ -31,24 +31,22 @@ class NewUserTest {
     void testConstructor() {
         NewUser actualNewUser = new NewUser();
         actualNewUser.setEmail("jane.doe@example.org");
-        actualNewUser.setFirstName("Jane");
-        actualNewUser.setJendra("Gender");
-        actualNewUser.setLastName("Doe");
+        actualNewUser.setFirst_name("Jane");
+        actualNewUser.setGender("Gender");
+        actualNewUser.setLast_name("Doe");
         actualNewUser.setMobile_No("Mobile No");
         actualNewUser.setPassword("iloveyou");
         actualNewUser.setUid(1L);
         String actualToStringResult = actualNewUser.toString();
         assertEquals("jane.doe@example.org", actualNewUser.getEmail());
-        assertEquals("Jane", actualNewUser.getFirstName());
+        assertEquals("Jane", actualNewUser.getFirst_name());
         assertEquals("Gender", actualNewUser.getGender());
-        assertEquals("Doe", actualNewUser.getLastName());
+        assertEquals("Doe", actualNewUser.getLast_name());
         assertEquals("Mobile No", actualNewUser.getMobile_No());
         assertEquals("iloveyou", actualNewUser.getPassword());
         assertEquals(1L, actualNewUser.getUid());
-        assertEquals(
-                "NewUser [Uid=1, FirstName=Jane, LastName=Doe, Email=jane.doe@example.org, Password=iloveyou, Gender=Gender,"
-                        + " Mobile_No=Mobile No]",
-                actualToStringResult);
+        assertEquals("NewUser [uid=1, First_name=Jane, Last_name=Doe, Email=jane.doe@example.org, Password=iloveyou,"
+                + " Gender=Gender, Mobile_No=Mobile No]", actualToStringResult);
     }
 
     /**
@@ -62,9 +60,9 @@ class NewUserTest {
         assertEquals(1L, actualNewUser.getUid());
         assertEquals("iloveyou", actualNewUser.getPassword());
         assertEquals("Mobile No", actualNewUser.getMobile_No());
-        assertEquals("Doe", actualNewUser.getLastName());
+        assertEquals("Doe", actualNewUser.getLast_name());
         assertEquals("Gender", actualNewUser.getGender());
-        assertEquals("Jane", actualNewUser.getFirstName());
+        assertEquals("Jane", actualNewUser.getFirst_name());
     }
 }
 

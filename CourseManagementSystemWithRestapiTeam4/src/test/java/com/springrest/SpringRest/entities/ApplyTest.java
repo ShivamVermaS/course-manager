@@ -10,40 +10,39 @@ class ApplyTest {
      *
      * <ul>
      *   <li>{@link Apply#Apply()}
-     *   <li>{@link Apply#setCourseId(String)}
-     *   <li>{@link Apply#setCourseName(String)}
+     *   <li>{@link Apply#setCourse_id(String)}
+     *   <li>{@link Apply#setCourse_name(String)}
      *   <li>{@link Apply#setDuration(String)}
      *   <li>{@link Apply#setFees(String)}
-     *   <li>{@link Apply#setFirstName(String)}
-     *   <li>{@link Apply#setLastName(String)}
+     *   <li>{@link Apply#setFirst_name(String)}
+     *   <li>{@link Apply#setLast_name(String)}
      *   <li>{@link Apply#toString()}
-     *   <li>{@link Apply#getCourseId()}
-     *   <li>{@link Apply#getCourseName()}
+     *   <li>{@link Apply#getCourse_id()}
+     *   <li>{@link Apply#getCourse_name()}
      *   <li>{@link Apply#getDuration()}
      *   <li>{@link Apply#getFees()}
-     *   <li>{@link Apply#getFirstName()}
-     *   <li>{@link Apply#getLastName()}
+     *   <li>{@link Apply#getFirst_name()}
+     *   <li>{@link Apply#getLast_name()}
      * </ul>
      */
     @Test
     void testConstructor() {
         Apply actualApply = new Apply();
-        actualApply.setCourseId("42");
-        actualApply.setCourseName("Course Name");
+        actualApply.setCourse_id("Course id");
+        actualApply.setCourse_name("Course name");
         actualApply.setDuration("Duration");
         actualApply.setFees("Fees");
-        actualApply.setFirstName("Jane");
-        actualApply.setLastName("Doe");
+        actualApply.setFirst_name("Jane");
+        actualApply.setLast_name("Doe");
         String actualToStringResult = actualApply.toString();
-        assertEquals("42", actualApply.getCourseId());
-        assertEquals("Course Name", actualApply.getCourseName());
+        assertEquals("Course id", actualApply.getCourse_id());
+        assertEquals("Course name", actualApply.getCourse_name());
         assertEquals("Duration", actualApply.getDuration());
         assertEquals("Fees", actualApply.getFees());
-        assertEquals("Jane", actualApply.getFirstName());
-        assertEquals("Doe", actualApply.getLastName());
-        assertEquals(
-                "Apply [FirstName=Jane, LastName=Doe, CourseName=Course Name, CourseId=42, Fees=Fees," + " Duration=Duration]",
-                actualToStringResult);
+        assertEquals("Jane", actualApply.getFirst_name());
+        assertEquals("Doe", actualApply.getLast_name());
+        assertEquals("Apply [First_name=Jane, Last_name=Doe, Course_name=Course name, Course_id=Course id, Fees=Fees,"
+                + " Duration=Duration]", actualToStringResult);
     }
 
     /**
@@ -51,40 +50,39 @@ class ApplyTest {
      *
      * <ul>
      *   <li>{@link Apply#Apply(String, String, String, String, String, String)}
-     *   <li>{@link Apply#setCourseId(String)}
-     *   <li>{@link Apply#setCourseName(String)}
+     *   <li>{@link Apply#setCourse_id(String)}
+     *   <li>{@link Apply#setCourse_name(String)}
      *   <li>{@link Apply#setDuration(String)}
      *   <li>{@link Apply#setFees(String)}
-     *   <li>{@link Apply#setFirstName(String)}
-     *   <li>{@link Apply#setLastName(String)}
+     *   <li>{@link Apply#setFirst_name(String)}
+     *   <li>{@link Apply#setLast_name(String)}
      *   <li>{@link Apply#toString()}
-     *   <li>{@link Apply#getCourseId()}
-     *   <li>{@link Apply#getCourseName()}
+     *   <li>{@link Apply#getCourse_id()}
+     *   <li>{@link Apply#getCourse_name()}
      *   <li>{@link Apply#getDuration()}
      *   <li>{@link Apply#getFees()}
-     *   <li>{@link Apply#getFirstName()}
-     *   <li>{@link Apply#getLastName()}
+     *   <li>{@link Apply#getFirst_name()}
+     *   <li>{@link Apply#getLast_name()}
      * </ul>
      */
     @Test
     void testConstructor2() {
-        Apply actualApply = new Apply("Jane", "Doe", "Course Name", "42", "Fees", "Duration");
-        actualApply.setCourseId("42");
-        actualApply.setCourseName("Course Name");
+        Apply actualApply = new Apply("Jane", "Doe", "Course name", "Course id", "Fees", "Duration");
+        actualApply.setCourse_id("Course id");
+        actualApply.setCourse_name("Course name");
         actualApply.setDuration("Duration");
         actualApply.setFees("Fees");
-        actualApply.setFirstName("Jane");
-        actualApply.setLastName("Doe");
+        actualApply.setFirst_name("Jane");
+        actualApply.setLast_name("Doe");
         String actualToStringResult = actualApply.toString();
-        assertEquals("42", actualApply.getCourseId());
-        assertEquals("Course Name", actualApply.getCourseName());
+        assertEquals("Course id", actualApply.getCourse_id());
+        assertEquals("Course name", actualApply.getCourse_name());
         assertEquals("Duration", actualApply.getDuration());
         assertEquals("Fees", actualApply.getFees());
-        assertEquals("Jane", actualApply.getFirstName());
-        assertEquals("Doe", actualApply.getLastName());
-        assertEquals(
-                "Apply [FirstName=Jane, LastName=Doe, CourseName=Course Name, CourseId=42, Fees=Fees," + " Duration=Duration]",
-                actualToStringResult);
+        assertEquals("Jane", actualApply.getFirst_name());
+        assertEquals("Doe", actualApply.getLast_name());
+        assertEquals("Apply [First_name=Jane, Last_name=Doe, Course_name=Course name, Course_id=Course id, Fees=Fees,"
+                + " Duration=Duration]", actualToStringResult);
     }
 }
 

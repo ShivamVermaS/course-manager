@@ -2,17 +2,28 @@ package com.springrest.SpringRest.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Courses {
 	
+	@NotEmpty
+	@Size(min=1, max=20, message="Name Should not be empty")
 	@Id
 	private long id;
+	@NotEmpty
 	private String title;
+	@NotEmpty
 	private String duration;
+	@NotEmpty
+	@Size(min=1, max=20, message="Name Should not be empty")
 	private long fee;
+	@NotEmpty
 	private String Category;
+	@NotEmpty
 	private String image;
+	@NotEmpty
 	String discription;
 	
 	

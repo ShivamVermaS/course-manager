@@ -6,4 +6,6 @@ import com.springrest.SpringRest.entities.Courses;
 
 public interface CourseRepo extends JpaRepository<Courses, Long> {
 
+	Object findById = null;
+
 }
