@@ -9,6 +9,8 @@ import com.springrest.SpringRest.entities.Courses;
 public interface CourseService {
 
 		public List<Courses> getCourses();
+		
+//		public List<Courses> getCourses(final Courses courses);
 	public Courses getcourse(long courseId);
 	
 	public Courses addCourse(Courses course);

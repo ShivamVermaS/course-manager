@@ -35,6 +35,16 @@ public class CourseServiceImpl implements CourseService {
 		return courseDao.findAll();
 	}
 
+//	@Override
+//	public List<Courses> getCourses(Courses courses) {
+//		 List<Courses>  course= courseDao.findAll();
+//		 if(course.contains(courses))
+//		 {
+//			 return course;
+//		 }
+//		 throw new RuntimeException("Course Not Available yet Now");
+//	}
+	
 	@Override
 	public Courses getcourse(long courseId) {
 		Courses entity = new Courses();

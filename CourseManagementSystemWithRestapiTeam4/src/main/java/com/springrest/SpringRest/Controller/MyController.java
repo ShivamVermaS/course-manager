@@ -45,11 +45,17 @@ public class MyController {
 				  
 				return courses;
 			}
-		}catch (Exception e) {
+	 	}catch (Exception e) {
 		System.out.println("No Data Available");	
 		}
 		return null;
 	}
+	
+	
+//	@GetMapping("/courses/")
+//	public List<Courses> getCourses() {
+//	return courseService.getCourses(null);
+//	}
 
 	@GetMapping("/courses/{courseId}")
 	public Optional<Courses> getCourse(@PathVariable ("courseId") final Long courseId) {
@@ -124,10 +130,24 @@ public class MyController {
 				return newuser;
 			}
 			
-		} catch (Exception e) {
+		} catch (Exception e) 
+		{
 			System.out.println("No Data Available");
 		}
+		return  newuser;
 		
+	}
+	@GetMapping("/users/{newuserId}")
+	public Optional<NewUser> getNewUser(@PathVariable ("newuserId") final Long newuserId) {
+		Optional<NewUser> newuser= userRepo.findById(newuserId);
+		try {
+			if(newuser != (null)) {
+				return newuser;
+			}
+			
+		}catch(Exception e) {
+			System.out.println("no Courses Are Available With This Id" +newuserId);
+		}
 		return null;
 	}
 
@@ -152,11 +172,12 @@ public class MyController {
 	}
 	
 	 @GetMapping("/admin")
-	   public List<Admin> getAllAdmin()
-	   {
-	       return cService.getAllAdmins();
-	   }
-	 
+	   public List<Admin> getAllAdmin() {
+		
+			
+			return cService.getAllAdmins();}
+			
+	
 	//===================api of apply for new course=======
 	   
 	   
@@ -164,7 +185,7 @@ public class MyController {
 	    public String saveApplies(@RequestBody Apply apply)
 	    {
 		   cService.saveApplies(apply);
-	         return "Admin Add Successfully";
+	         return "Course Add Successfully";
 	    }
 	    
 	   @GetMapping("/apply")
