@@ -16,7 +16,7 @@ public interface CourseRepo extends JpaRepository<Courses, Long> {
 
 	String deleteById(long id);
 
-	Courses findByTitle(String name);
+	Optional<Courses> findByTitle(String name);
 
 
 }

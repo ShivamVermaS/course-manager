@@ -146,7 +146,7 @@ class CourseControllerTest {
     @Test
     void testDeleteCourseById() throws Exception {
         when(courseService.deleteCourseById(anyLong())).thenReturn("42");
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/courses/{id}", 123L);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/course/{id}", 123L);
         MockMvcBuilders.standaloneSetup(courseController)
                 .build()
                 .perform(requestBuilder)
@@ -161,7 +161,7 @@ class CourseControllerTest {
     @Test
     void testDeleteCourseById2() throws Exception {
         when(courseService.deleteCourseById(anyLong())).thenReturn("42");
-        MockHttpServletRequestBuilder deleteResult = MockMvcRequestBuilders.delete("/courses/{id}", 123L);
+        MockHttpServletRequestBuilder deleteResult = MockMvcRequestBuilders.delete("/course/{id}", 123L);
         deleteResult.characterEncoding("Encoding");
         MockMvcBuilders.standaloneSetup(courseController)
                 .build()
@@ -184,7 +184,8 @@ class CourseControllerTest {
         courses.setId(123L);
         courses.setImage("Image");
         courses.setTitle("Dr");
-        when(courseService.getCourses((String) any())).thenReturn(courses);
+        Optional<Courses> ofResult = Optional.of(courses);
+        when(courseService.getCourses((String) any())).thenReturn(ofResult);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/course/{name}", "Name");
         MockMvcBuilders.standaloneSetup(courseController)
                 .build()

@@ -61,7 +61,7 @@ public class CourseController
 	}
 		
 	@GetMapping("/course/{name}")
-	public Courses getCourses(@PathVariable("name") String name) 
+	public Optional<Courses> getCourses(@PathVariable("name") String name) 
 	{
 		return courseService.getCourses(name);
 	}
