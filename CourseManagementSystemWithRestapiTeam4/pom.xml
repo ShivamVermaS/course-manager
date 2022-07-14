@@ -14,7 +14,7 @@
 	<name>SpringRest</name>
 	<description>Rest API Project</description>
 	<properties>
-		<java.version>8</java.version>
+		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 	
@@ -62,7 +62,6 @@
 <dependency>
     <groupId>org.postgresql</groupId>
     <artifactId>postgresql</artifactId>
-    <version>42.4.0</version>
 </dependency>
 
 	</dependencies>

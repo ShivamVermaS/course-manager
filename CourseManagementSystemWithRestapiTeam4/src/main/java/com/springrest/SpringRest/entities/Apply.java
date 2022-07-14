@@ -36,7 +36,7 @@ public class Apply {
 			@NotEmpty @Size(min = 1, max = 30, message = "Name Should not be empty") String last_name,
 			@NotEmpty @Size(min = 1, max = 30, message = "Name Should not be empty") String course_name, int course_id,
 			 int fees,
-			@NotEmpty @Size(min = 1, max = 30, message = "Name Should not be empty") String duration) {
+			@NotEmpty @Size(min = 1, max = 50, message = "Name Should not be empty") String duration) {
 		super();
 		First_name = first_name;
 		Last_name = last_name;
@@ -88,8 +88,4 @@ public class Apply {
 				+ ", Course_id=" + Course_id + ", Fees=" + Fees + ", Duration=" + Duration + "]";
 	}
 	
-	
-
-	
-
 }

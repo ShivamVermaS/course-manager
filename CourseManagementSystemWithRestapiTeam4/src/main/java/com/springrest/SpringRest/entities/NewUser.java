@@ -24,7 +24,7 @@ String Last_name;
 @NotEmpty
 @javax.validation.constraints.Email(message="Invalid Email")
 @Column(length=30, unique = true)
-String Email;
+String email;
 
 @NotNull
 String Password;
@@ -45,7 +45,7 @@ public NewUser(long uid, @NotEmpty @Size(min = 1, max = 20, message = "Name Shou
 	this.uid = uid;
 	First_name = first_name;
 	Last_name = last_name;
-	Email = email;
+	this.email = email;
 	Password = password;
 	Gender = gender;
 	Mobile_No = mobile_No;
@@ -76,11 +76,11 @@ public void setLast_name(String last_name) {
 }
 
 public String getEmail() {
-	return Email;
+	return email;
 }
 
 public void setEmail(String email) {
-	Email = email;
+	this.email = email;
 }
 
 public String getPassword() {
@@ -109,7 +109,7 @@ public void setMobile_No(String mobile_No) {
 
 @Override
 public String toString() {
-	return "NewUser [uid=" + uid + ", First_name=" + First_name + ", Last_name=" + Last_name + ", Email=" + Email
+	return "NewUser [uid=" + uid + ", First_name=" + First_name + ", Last_name=" + Last_name + ", Email=" + email
 			+ ", Password=" + Password + ", Gender=" + Gender + ", Mobile_No=" + Mobile_No + "]";
 }
 
