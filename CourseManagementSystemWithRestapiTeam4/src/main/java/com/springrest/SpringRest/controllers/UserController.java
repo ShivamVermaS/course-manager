@@ -1,5 +1,7 @@
 package com.springrest.SpringRest.controllers;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +37,9 @@ public class UserController
 	}
 	
 	@PostMapping("/userlogin")
-	public ResponseEntity<NewUser> getByEmail(@Valid @RequestParam String email)
+	public ResponseEntity<Optional<NewUser>> getByEmails(@Valid @RequestParam String email)
 	{
-	   return new ResponseEntity<NewUser>(userService.getByEmail(email),HttpStatus.ACCEPTED);
+	   return new ResponseEntity<>(userService.getByEmail(email),HttpStatus.OK);
 	}
 
 	

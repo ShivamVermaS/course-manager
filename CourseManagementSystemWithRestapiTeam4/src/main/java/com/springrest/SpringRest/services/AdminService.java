@@ -25,17 +25,17 @@ public class AdminService {
 	public Admin saveAdmins(@Valid Admin admin) {
 
 		Optional<Admin> ad = adminRepo.findByEmail(admin.getEmail());
-		try {
-			if (ad.isPresent()) {
-
-				throw new IllegalArgumentException("Not Present");
-			} else {
+//		try {
+//			if (ad.isPresent()) {
+//
+//				throw new IllegalArgumentException("Not Present");
+//			} else {
 
 				return adminRepo.save(admin);
-			}
-		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("Not Present");
-		}
+//			}
+//		} catch (IllegalArgumentException e) {
+//			throw new IllegalArgumentException("Not Present");
+//		}
 
 	}
 

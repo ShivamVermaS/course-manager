@@ -6,6 +6,9 @@ import static org.mockito.Mockito.when;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springrest.SpringRest.entities.NewUser;
 import com.springrest.SpringRest.services.UserService;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,21 @@ class UserControllerTest {
      */
     @Test
     void testGetAllUser() throws Exception {
+        when(userService.getAllUser()).thenReturn("All User");
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users");
+        MockMvcBuilders.standaloneSetup(userController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
+                .andExpect(MockMvcResultMatchers.content().string("All User"));
+    }
+
+    /**
+     * Method under test: {@link UserController#getAllUser()}
+     */
+    @Test
+    void testGetAllUser2() throws Exception {
         when(userService.getAllUser()).thenReturn("All User");
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users");
         MockMvcBuilders.standaloneSetup(userController)
@@ -77,15 +95,15 @@ class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
-                                "{\"uid\":1,\"email\":\"jane.doe@example.org\",\"password\":\"iloveyou\",\"last_name\":\"Doe\",\"mobile_No\":\"Mobile"
-                                        + " No\",\"gender\":\"Gender\",\"first_name\":\"Jane\"}"));
+                                "{\"uid\":1,\"email\":\"jane.doe@example.org\",\"password\":\"iloveyou\",\"first_name\":\"Jane\",\"mobile_No\":\"Mobile"
+                                        + " No\",\"last_name\":\"Doe\",\"gender\":\"Gender\"}"));
     }
 
     /**
-     * Method under test: {@link UserController#getByEmail(String)}
+     * Method under test: {@link UserController#getByEmails(String)}
      */
     @Test
-    void testGetByEmail() throws Exception {
+    void testGetByEmails() throws Exception {
         NewUser newUser = new NewUser();
         newUser.setEmail("jane.doe@example.org");
         newUser.setFirst_name("Jane");
@@ -94,15 +112,18 @@ class UserControllerTest {
         newUser.setMobile_No("Mobile No");
         newUser.setPassword("iloveyou");
         newUser.setUid(1L);
-        when(userService.getByEmail((String) any())).thenReturn(newUser);
+        Optional<NewUser> ofResult = Optional.of(newUser);
+        when(userService.getByEmail((String) any())).thenReturn(ofResult);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/userlogin").param("email", "foo");
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(userController).build().perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isAccepted())
+        MockMvcBuilders.standaloneSetup(userController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
-                                "{\"uid\":1,\"email\":\"jane.doe@example.org\",\"password\":\"iloveyou\",\"last_name\":\"Doe\",\"mobile_No\":\"Mobile"
-                                        + " No\",\"gender\":\"Gender\",\"first_name\":\"Jane\"}"));
+                                "{\"uid\":1,\"email\":\"jane.doe@example.org\",\"password\":\"iloveyou\",\"first_name\":\"Jane\",\"mobile_No\":\"Mobile"
+                                        + " No\",\"last_name\":\"Doe\",\"gender\":\"Gender\"}"));
     }
-}
 
+}

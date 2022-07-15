@@ -46,19 +46,7 @@ class CourseServiceTest {
         verify(courseRepo).findAll();
     }
 
-    /**
-     * Method under test: {@link CourseService#getAllCourses()}
-     */
-    @Test
-    void testGetAllCourses2() {
-        when(courseRepo.findAll()).thenThrow(new IllegalArgumentException("foo"));
-        assertThrows(IllegalArgumentException.class, () -> courseService.getAllCourses());
-        verify(courseRepo).findAll();
-    }
-
-    /**
-     * Method under test: {@link CourseService#getCourseById(long)}
-     */
+  
     @Test
     void testGetCourseById() {
         Courses courses = new Courses();
@@ -87,19 +75,7 @@ class CourseServiceTest {
         verify(courseRepo).findById((Long) any());
     }
 
-    /**
-     * Method under test: {@link CourseService#getCourseById(long)}
-     */
-    @Test
-    void testGetCourseById3() {
-        when(courseRepo.findById((Long) any())).thenThrow(new IllegalArgumentException("Not Present"));
-        assertThrows(IllegalArgumentException.class, () -> courseService.getCourseById(123L));
-        verify(courseRepo).findById((Long) any());
-    }
 
-    /**
-     * Method under test: {@link CourseService#saveAllCourse(Courses)}
-     */
     @Test
     void testSaveAllCourse() {
         Courses courses = new Courses();
@@ -136,39 +112,7 @@ class CourseServiceTest {
         verify(courseRepo).findById((Long) any());
     }
 
-    /**
-     * Method under test: {@link CourseService#saveAllCourse(Courses)}
-     */
-    @Test
-    void testSaveAllCourse2() {
-        Courses courses = new Courses();
-        courses.setCategory("Category");
-        courses.setDiscription("Discription");
-        courses.setDuration("Duration");
-        courses.setFee(1L);
-        courses.setId(123L);
-        courses.setImage("Image");
-        courses.setTitle("Dr");
-        Optional<Courses> ofResult = Optional.of(courses);
-        when(courseRepo.save((Courses) any())).thenThrow(new IllegalArgumentException("foo"));
-        when(courseRepo.findById((Long) any())).thenReturn(ofResult);
 
-        Courses courses1 = new Courses();
-        courses1.setCategory("Category");
-        courses1.setDiscription("Discription");
-        courses1.setDuration("Duration");
-        courses1.setFee(1L);
-        courses1.setId(123L);
-        courses1.setImage("Image");
-        courses1.setTitle("Dr");
-        assertThrows(IllegalArgumentException.class, () -> courseService.saveAllCourse(courses1));
-        verify(courseRepo).save((Courses) any());
-        verify(courseRepo).findById((Long) any());
-    }
-
-    /**
-     * Method under test: {@link CourseService#saveAllCourse(Courses)}
-     */
     @Test
     void testSaveAllCourse3() {
         Courses courses = new Courses();
@@ -233,39 +177,6 @@ class CourseServiceTest {
         verify(courseRepo).findById((Long) any());
     }
 
-    /**
-     * Method under test: {@link CourseService#updateCourse(Courses)}
-     */
-    @Test
-    void testUpdateCourse2() {
-        Courses courses = new Courses();
-        courses.setCategory("Category");
-        courses.setDiscription("Discription");
-        courses.setDuration("Duration");
-        courses.setFee(1L);
-        courses.setId(123L);
-        courses.setImage("Image");
-        courses.setTitle("Dr");
-        Optional<Courses> ofResult = Optional.of(courses);
-        when(courseRepo.save((Courses) any())).thenThrow(new IllegalArgumentException("foo"));
-        when(courseRepo.findById((Long) any())).thenReturn(ofResult);
-
-        Courses courses1 = new Courses();
-        courses1.setCategory("Category");
-        courses1.setDiscription("Discription");
-        courses1.setDuration("Duration");
-        courses1.setFee(1L);
-        courses1.setId(123L);
-        courses1.setImage("Image");
-        courses1.setTitle("Dr");
-        assertThrows(IllegalArgumentException.class, () -> courseService.updateCourse(courses1));
-        verify(courseRepo).save((Courses) any());
-        verify(courseRepo).findById((Long) any());
-    }
-
-    /**
-     * Method under test: {@link CourseService#updateCourse(Courses)}
-     */
     @Test
     void testUpdateCourse3() {
         Courses courses = new Courses();
@@ -312,30 +223,6 @@ class CourseServiceTest {
         verify(courseRepo).findById((Long) any());
     }
 
-    /**
-     * Method under test: {@link CourseService#deleteCourseById(long)}
-     */
-    @Test
-    void testDeleteCourseById2() {
-        Courses courses = new Courses();
-        courses.setCategory("Category");
-        courses.setDiscription("Discription");
-        courses.setDuration("Duration");
-        courses.setFee(1L);
-        courses.setId(123L);
-        courses.setImage("Image");
-        courses.setTitle("Dr");
-        Optional<Courses> ofResult = Optional.of(courses);
-        when(courseRepo.deleteById(anyLong())).thenThrow(new IllegalArgumentException("Deleted"));
-        when(courseRepo.findById((Long) any())).thenReturn(ofResult);
-        assertThrows(IllegalArgumentException.class, () -> courseService.deleteCourseById(123L));
-        verify(courseRepo).deleteById(anyLong());
-        verify(courseRepo).findById((Long) any());
-    }
-
-    /**
-     * Method under test: {@link CourseService#deleteCourseById(long)}
-     */
     @Test
     void testDeleteCourseById3() {
         when(courseRepo.deleteById(anyLong())).thenReturn("42");
@@ -375,14 +262,6 @@ class CourseServiceTest {
         verify(courseRepo).findByTitle((String) any());
     }
 
-    /**
-     * Method under test: {@link CourseService#getCourses(String)}
-     */
-    @Test
-    void testGetCourses3() {
-        when(courseRepo.findByTitle((String) any())).thenThrow(new IllegalArgumentException("Not Present"));
-        assertThrows(IllegalArgumentException.class, () -> courseService.getCourses("Name"));
-        verify(courseRepo).findByTitle((String) any());
-    }
+ 
 }
 

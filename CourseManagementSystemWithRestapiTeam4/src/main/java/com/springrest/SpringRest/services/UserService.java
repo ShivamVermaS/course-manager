@@ -26,25 +26,25 @@ public class UserService {
 
 	public NewUser saveAllUser(@Valid NewUser newUser) {
 		Optional<NewUser> ad = userRepo.findByEmail(newUser.getEmail());
-		try {
-			if (ad.isPresent()) {
-
-				throw new IllegalArgumentException("Not Present");
-			} else {
+//		try {
+//			if (ad.isPresent()) {
 
 				return userRepo.save(newUser);
-			}
-		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("Not Present");
-		}
+//			} else {
+//
+//				throw new IllegalArgumentException("Not Present");
+//			}
+//		} catch (IllegalArgumentException e) {
+//			throw new IllegalArgumentException("Not Present");
+//		}
 
 	}
 		
 	
 
-	public NewUser getByEmail(@Valid String email) {
+	public Optional<NewUser> getByEmail(@Valid String email) {
 		// TODO Auto-generated method stub
-		return userRepo.getByEmail(email);
+		return userRepo.findByEmail(email);
 	}
 
 
