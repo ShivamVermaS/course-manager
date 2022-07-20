@@ -31,9 +31,7 @@ class UserControllerTest {
     @MockBean
     private UserService userService;
 
-    /**
-     * Method under test: {@link UserController#getAllUser()}
-     */
+ 
     @Test
     void testGetAllUser() throws Exception {
         when(userService.getAllUser()).thenReturn("All User");
@@ -46,9 +44,7 @@ class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("All User"));
     }
 
-    /**
-     * Method under test: {@link UserController#getAllUser()}
-     */
+   
     @Test
     void testGetAllUser2() throws Exception {
         when(userService.getAllUser()).thenReturn("All User");
@@ -61,9 +57,7 @@ class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("All User"));
     }
 
-    /**
-     * Method under test: {@link UserController#saveAllUser(NewUser)}
-     */
+   
     @Test
     void testSaveAllUser() throws Exception {
         NewUser newUser = new NewUser();
@@ -99,9 +93,7 @@ class UserControllerTest {
                                         + " No\",\"last_name\":\"Doe\",\"gender\":\"Gender\"}"));
     }
 
-    /**
-     * Method under test: {@link UserController#getByEmails(String)}
-     */
+  
     @Test
     void testGetByEmails() throws Exception {
         NewUser newUser = new NewUser();

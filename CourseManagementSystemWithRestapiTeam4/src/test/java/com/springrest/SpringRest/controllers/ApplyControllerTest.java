@@ -28,9 +28,7 @@ class ApplyControllerTest {
     @MockBean
     private ApplyService applyService;
 
-    /**
-     * Method under test: {@link ApplyController#getAllAdmin()}
-     */
+  
     @Test
     void testGetAllAdmin() throws Exception {
         when(applyService.getAllAdmin()).thenReturn("All Admin");
@@ -43,9 +41,7 @@ class ApplyControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("All Admin"));
     }
 
-    /**
-     * Method under test: {@link ApplyController#getByEmail(Apply)}
-     */
+
     @Test
     void testGetByEmail() throws Exception {
         Apply apply = new Apply();

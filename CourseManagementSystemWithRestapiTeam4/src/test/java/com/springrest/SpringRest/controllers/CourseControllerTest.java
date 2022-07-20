@@ -33,9 +33,7 @@ class CourseControllerTest {
     @MockBean
     private CourseService courseService;
 
-    /**
-     * Method under test: {@link CourseController#getAllCourses()}
-     */
+
     @Test
     void testGetAllCourses() throws Exception {
         when(courseService.getAllCourses()).thenReturn(new ArrayList<>());
@@ -48,9 +46,7 @@ class CourseControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 
-    /**
-     * Method under test: {@link CourseController#getAllCourses()}
-     */
+  
     @Test
     void testGetAllCourses2() throws Exception {
         when(courseService.getAllCourses()).thenReturn(new ArrayList<>());

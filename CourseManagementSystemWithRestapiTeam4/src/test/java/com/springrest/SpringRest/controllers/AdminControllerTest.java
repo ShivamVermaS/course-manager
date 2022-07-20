@@ -28,9 +28,7 @@ class AdminControllerTest {
     @MockBean
     private AdminService adminService;
 
-    /**
-     * Method under test: {@link AdminController#getAllAdmin()}
-     */
+
     @Test
     void testGetAllAdmin() throws Exception {
         when(adminService.getAllAdmin()).thenReturn("All Admin");
@@ -43,9 +41,7 @@ class AdminControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("All Admin"));
     }
 
-    /**
-     * Method under test: {@link AdminController#saveAdmins(Admin)}
-     */
+  
     @Test
     void testSaveAdmins() throws Exception {
         Admin admin = new Admin();
